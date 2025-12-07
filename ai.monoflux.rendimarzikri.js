@@ -1,17 +1,15 @@
-// === GPT Ultra Mini with Neural NLP Layer ===
+// === MonoFlux Mini with Neural NLP Layer ===
 
 window.MONOFLUX_NLP = {
 
   // ───────────────────────────────
-  // 1. Mini Random Embedding Layer
+  // Mini Random Embedding Layer
   // ───────────────────────────────
   wordVec: {},
   dim: 16,
-
   embed(word) {
     word = word.toLowerCase();
     if (!this.wordVec[word]) {
-      // buat embedding acak tapi stabil
       let arr = [];
       for (let i = 0; i < this.dim; i++) {
         arr.push((Math.sin(word.charCodeAt(0) * (i+1)) % 1));
@@ -20,11 +18,9 @@ window.MONOFLUX_NLP = {
     }
     return this.wordVec[word];
   },
-
   sentenceEmbed(text) {
     let words = text.toLowerCase().split(/\s+/);
     let vec = new Array(this.dim).fill(0);
-
     for (let w of words) {
       let e = this.embed(w);
       for (let i = 0; i < this.dim; i++) {
@@ -35,7 +31,7 @@ window.MONOFLUX_NLP = {
   },
 
   // ───────────────────────────────
-  // 2. Mini Dense Layer (ReLU)
+  // Mini Dense Layer (ReLU)
   // ───────────────────────────────
   dense(vec) {
     let out = [];
@@ -47,7 +43,7 @@ window.MONOFLUX_NLP = {
   },
 
   // ───────────────────────────────
-  // 3. Cosine Similarity Lanjutan
+  // Cosine Similarity Lanjutan
   // ───────────────────────────────
   similarity(a, b) {
     let dot = 0, na = 0, nb = 0;
@@ -82,8 +78,6 @@ window.MONOFLUX_NLP = {
   // Main Reply
   // ───────────────────────────────
   reply(user, memory) {
-
-    // 1. Cek pola
     for (let item of memory) {
       let pat = this.matchPattern(user, item.q);
       if (pat.ok) {
@@ -91,7 +85,7 @@ window.MONOFLUX_NLP = {
       }
     }
 
-    // 2. Neural NLP Layer
+    // Neural NLP Layer
     let uEmbed = this.dense(this.sentenceEmbed(user));
     let best = null;
     let bestScore = 0;
@@ -104,7 +98,7 @@ window.MONOFLUX_NLP = {
       }
     }
     if (best) return best.a;
-    // 3. fallback
+    // fallback
     return "Aku tidak tahu maksudmu.";
   }
 };
