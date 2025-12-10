@@ -24,7 +24,7 @@
 function kirim() {
   let user = input.value.trim();
   input.value = "";
-  let memory = [
+  let database = [
   { q:"halo", a:"Halo juga!" },
   { q:"nama saya ×*", a:"halo ×*!" },
   { q:"apa kabar", a:"Baik, kamu?" },
@@ -35,7 +35,7 @@ function kirim() {
   { q:"Baik, sehat", a:"Senang mendengar itu." },
   { q:"apa yang sering kamu lakukan", a:"Aku sering menjawab pesan pengguna." }
   ];
-  let res = MONOFLUX_NLP.reply(user, memory);
+  let res = MONOFLUX_NLP.reply(user, database);
   chat.innerHTML += `&lt;div style='color: blue'&gt;AI: ${res}&lt;/div&gt;`;
 }
 &lt;/script&gt;
